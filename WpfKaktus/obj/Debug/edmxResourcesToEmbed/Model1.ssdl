@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище KaktusModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Collection">
+    <Key>
+      <PropertyRef Name="id_collection" />
+    </Key>
+    <Property Name="id_collection" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="id_kaktus" Type="int" Nullable="false" />
+    <Property Name="id_exibition" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Exibition">
+    <Key>
+      <PropertyRef Name="id_exibition" />
+    </Key>
+    <Property Name="id_exibition" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Date" Type="date" />
+    <Property Name="Place" Type="nvarchar" MaxLength="50" />
+    <Property Name="Comments" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Kaktus">
+    <Key>
+      <PropertyRef Name="id_kaktus" />
+    </Key>
+    <Property Name="id_kaktus" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_kaktusType" Type="int" />
+    <Property Name="From" Type="nvarchar" MaxLength="50" />
+    <Property Name="Age" Type="int" />
+    <Property Name="Price" Type="float" />
+    <Property Name="Uhod" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="KaktusType">
+    <Key>
+      <PropertyRef Name="id_KaktusType" />
+    </Key>
+    <Property Name="id_KaktusType" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK_Collection_Exibition">
+    <End Role="Exibition" Type="Self.Exibition" Multiplicity="1" />
+    <End Role="Collection" Type="Self.Collection" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Exibition">
+        <PropertyRef Name="id_exibition" />
+      </Principal>
+      <Dependent Role="Collection">
+        <PropertyRef Name="id_exibition" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Collection_Kaktus">
+    <End Role="Kaktus" Type="Self.Kaktus" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Collection" Type="Self.Collection" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kaktus">
+        <PropertyRef Name="id_kaktus" />
+      </Principal>
+      <Dependent Role="Collection">
+        <PropertyRef Name="id_kaktus" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Kaktus_KaktusType">
+    <End Role="KaktusType" Type="Self.KaktusType" Multiplicity="0..1" />
+    <End Role="Kaktus" Type="Self.Kaktus" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KaktusType">
+        <PropertyRef Name="id_KaktusType" />
+      </Principal>
+      <Dependent Role="Kaktus">
+        <PropertyRef Name="id_kaktusType" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище KaktusModelContainer">
+    <EntitySet Name="Collection" EntityType="Self.Collection" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Exibition" EntityType="Self.Exibition" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Kaktus" EntityType="Self.Kaktus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="KaktusType" EntityType="Self.KaktusType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Collection_Exibition" Association="Self.FK_Collection_Exibition">
+      <End Role="Exibition" EntitySet="Exibition" />
+      <End Role="Collection" EntitySet="Collection" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Collection_Kaktus" Association="Self.FK_Collection_Kaktus">
+      <End Role="Kaktus" EntitySet="Kaktus" />
+      <End Role="Collection" EntitySet="Collection" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Kaktus_KaktusType" Association="Self.FK_Kaktus_KaktusType">
+      <End Role="KaktusType" EntitySet="KaktusType" />
+      <End Role="Kaktus" EntitySet="Kaktus" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

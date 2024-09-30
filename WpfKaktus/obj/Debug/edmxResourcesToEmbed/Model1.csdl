@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="KaktusModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="KaktusEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Collection" EntityType="KaktusModel.Collection" />
+    <EntitySet Name="Exibition" EntityType="KaktusModel.Exibition" />
+    <EntitySet Name="Kaktus" EntityType="KaktusModel.Kaktus" />
+    <EntitySet Name="KaktusType" EntityType="KaktusModel.KaktusType" />
+    <EntitySet Name="sysdiagrams" EntityType="KaktusModel.sysdiagrams" />
+    <AssociationSet Name="FK_Collection_Exibition" Association="KaktusModel.FK_Collection_Exibition">
+      <End Role="Exibition" EntitySet="Exibition" />
+      <End Role="Collection" EntitySet="Collection" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Collection_Kaktus" Association="KaktusModel.FK_Collection_Kaktus">
+      <End Role="Kaktus" EntitySet="Kaktus" />
+      <End Role="Collection" EntitySet="Collection" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Kaktus_KaktusType" Association="KaktusModel.FK_Kaktus_KaktusType">
+      <End Role="KaktusType" EntitySet="KaktusType" />
+      <End Role="Kaktus" EntitySet="Kaktus" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Collection">
+    <Key>
+      <PropertyRef Name="id_collection" />
+    </Key>
+    <Property Name="id_collection" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="id_kaktus" Type="Int32" Nullable="false" />
+    <Property Name="id_exibition" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Exibition" Relationship="KaktusModel.FK_Collection_Exibition" FromRole="Collection" ToRole="Exibition" />
+    <NavigationProperty Name="Kaktus" Relationship="KaktusModel.FK_Collection_Kaktus" FromRole="Collection" ToRole="Kaktus" />
+  </EntityType>
+  <EntityType Name="Exibition">
+    <Key>
+      <PropertyRef Name="id_exibition" />
+    </Key>
+    <Property Name="id_exibition" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Date" Type="DateTime" Precision="0" />
+    <Property Name="Place" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Comments" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Collection" Relationship="KaktusModel.FK_Collection_Exibition" FromRole="Exibition" ToRole="Collection" />
+  </EntityType>
+  <EntityType Name="Kaktus">
+    <Key>
+      <PropertyRef Name="id_kaktus" />
+    </Key>
+    <Property Name="id_kaktus" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_kaktusType" Type="Int32" />
+    <Property Name="From" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Age" Type="Int32" />
+    <Property Name="Price" Type="Double" />
+    <Property Name="Uhod" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Collection" Relationship="KaktusModel.FK_Collection_Kaktus" FromRole="Kaktus" ToRole="Collection" />
+    <NavigationProperty Name="KaktusType" Relationship="KaktusModel.FK_Kaktus_KaktusType" FromRole="Kaktus" ToRole="KaktusType" />
+  </EntityType>
+  <EntityType Name="KaktusType">
+    <Key>
+      <PropertyRef Name="id_KaktusType" />
+    </Key>
+    <Property Name="id_KaktusType" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Kaktus" Relationship="KaktusModel.FK_Kaktus_KaktusType" FromRole="KaktusType" ToRole="Kaktus" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK_Collection_Exibition">
+    <End Type="KaktusModel.Exibition" Role="Exibition" Multiplicity="1" />
+    <End Type="KaktusModel.Collection" Role="Collection" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Exibition">
+        <PropertyRef Name="id_exibition" />
+      </Principal>
+      <Dependent Role="Collection">
+        <PropertyRef Name="id_exibition" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Collection_Kaktus">
+    <End Type="KaktusModel.Kaktus" Role="Kaktus" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="KaktusModel.Collection" Role="Collection" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kaktus">
+        <PropertyRef Name="id_kaktus" />
+      </Principal>
+      <Dependent Role="Collection">
+        <PropertyRef Name="id_kaktus" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Kaktus_KaktusType">
+    <End Type="KaktusModel.KaktusType" Role="KaktusType" Multiplicity="0..1" />
+    <End Type="KaktusModel.Kaktus" Role="Kaktus" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KaktusType">
+        <PropertyRef Name="id_KaktusType" />
+      </Principal>
+      <Dependent Role="Kaktus">
+        <PropertyRef Name="id_kaktusType" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

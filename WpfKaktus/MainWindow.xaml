@@ -1,0 +1,55 @@
+﻿<Window x:Class="WpfKaktus.KaktusWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfKaktus"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <TabControl Name ="KaktusTab">
+            <TabItem Header="Kaktusi">
+                <Grid>
+                    <ListView Grid.Row="1" Name="ListKaktus" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Height="400" Width="400" HorizontalAlignment="Left" SelectionChanged="OnKaktusSelected">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=id_kaktus}" Width="85">id</GridViewColumn>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=id_kaktusType}" Width="85">Type id</GridViewColumn>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=Uhod}" Width="85">Uhod</GridViewColumn>   
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Grid Height="400" Width="400" HorizontalAlignment="Right">
+                        <TextBox Name="UhodTextBox" HorizontalAlignment="Center" Margin="0,33,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+                        <Button Content="AddCactus" HorizontalAlignment="Center" Margin="0,150,0,0" VerticalAlignment="Top" Height="40" Width="120" Click="AddKaktus"/>
+                        <Button Content="Change ID" HorizontalAlignment="Center" Margin="0,200,0,0" VerticalAlignment="Top" Height="40" Width="120" Click="ChangeUhod"/>
+                        <Button Content="RemoveCactus" HorizontalAlignment="Center" Margin="0,250,0,0" VerticalAlignment="Top" Height="40" Width="120" Click="RemoveKaktus"/>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Vistavki">
+                <Grid>
+                    <ListView Grid.Row="1" Name="ListExibition" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Height="400" Width="400" HorizontalAlignment="Left" SelectionChanged="OnVistavkaSelected">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=id_exibition}" Width="85">id</GridViewColumn>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=Date}" Width="85">Date</GridViewColumn>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=Place}" Width="85">Place</GridViewColumn>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=Comments}" Width="140">Comments</GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Grid Height="400" Width="400" HorizontalAlignment="Right">
+                        <TextBox Name="ExibitionTextBox" HorizontalAlignment="Center" Margin="0,33,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+                        <DatePicker Name ="ExibitionDatePicker" HorizontalAlignment="Center" Margin="0,150,0,0" VerticalAlignment="Top" Height="40"/>
+                        <Button Content="Change Place" HorizontalAlignment="Center" Margin="0,200,0,0" VerticalAlignment="Top" Height="20" Width="120" Click="ChangePlace"/>
+                        <Button Content="Change Date" HorizontalAlignment="Center" Margin="0,230,0,0" VerticalAlignment="Top" Height="20" Width="120" Click="ChangeDate"/>
+                        <Button Content="Change Comments" HorizontalAlignment="Center" Margin="0,260,0,0" VerticalAlignment="Top" Height="20" Width="120" Click="ChangeComments"/>
+                        <Button Content="Add" HorizontalAlignment="Center" Margin="0,290,0,0" VerticalAlignment="Top" Height="20" Width="120" Click="AddExibition"/>
+                        <Button Content="Remove" HorizontalAlignment="Center" Margin="0,320,0,0" VerticalAlignment="Top" Height="20" Width="120" Click="RemoveExibition"/>
+                    </Grid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
